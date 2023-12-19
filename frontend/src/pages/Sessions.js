@@ -18,7 +18,6 @@ const Sessions = () =>{
     const [enrollments, setEnrollments] = useState([]);
     const [loading, setLoading] = useState(true);
 
-  
 
 
     useEffect(() => {
@@ -26,9 +25,6 @@ const Sessions = () =>{
         try {
           const accessToken = sessionStorage.getItem("accessToken");
           const headers = { accessToken };
-          
-          // console.log(headers);
-
           const response = await axios.get(`${process.env.REACT_APP_BACKEND}/Api/sessions/${email}`, { headers });
           console.log(response);
   
@@ -46,8 +42,6 @@ const Sessions = () =>{
   
       fetchEnrollments();
     }, [email]);
-
-
 
 
     if(!sessionStorage.getItem('accessToken')) return <LoginToBook/>
