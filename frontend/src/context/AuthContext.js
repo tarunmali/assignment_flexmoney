@@ -5,11 +5,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(sessionStorage.getItem('accessToken'));
 
-//   const updateAccessToken = (newToken) => {
-//     setAccessToken(newToken);
-//     sessionStorage.setItem('accessToken', newToken);
-//   };
-
   return (
     <AuthContext.Provider value={{ accessToken,  setAccessToken }}>
       {children}

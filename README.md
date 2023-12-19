@@ -54,7 +54,7 @@ Complete digital handrawn er diagram uploades as a pdf
 These are the acutual tables on mongoDB which the service is using right now
 
 #### User collection
-![1703008560622](image/README/1703008560622.png)
+![1703015271678](image/README/1703015271678.png)
 
 #### Enrollments collection
 ![1703008597387](image/README/1703008597387.png)
@@ -66,6 +66,7 @@ These are the acutual tables on mongoDB which the service is using right now
 2. Backend is in Express(Node.JS).
 3. Frontend is deploed on Vercel.
 4. The Node.JS backend is containerized by Docker, app image is first uploaded on Amazon App ECR registry and then deployed on Amazone App runner 
+5. MongoDB is used for the Database
 
 
 
@@ -113,7 +114,72 @@ The slot indicator will be a made a react component, and to show some special th
 3. Using Kubernetes along with docker to fine tune the scaling of my node.js app according to traffic
 
 ## Code logic and Algorithms  (along with step wise screenshots)
-1. 
+1. Landing page
+![1703014494573](image/README/1703014494573.png)
+Users can see available slots without logging in, but cannot book without login
+
+![1703014604531](image/README/1703014604531.png)
+
+2. Signup
+
+Data validation is done on the fly in frontend
+
+![1703014738526](image/README/1703014738526.png)
+![1703014675952](image/README/1703014675952.png)
+
+When user signup for the first time, they are wecomed by confetti made possible by canvas-confetti npm package
+
+![1703015080816](image/README/1703015080816.png)
+
+```
+confetti({
+particleCount: 600,
+spread: 180,
+});
+```
+
+The passwords are hashed by bcrypt before storing to the MongoDB database
+![1703015585210](image/README/1703015585210.png)
+
+3. Login
+![1703015625740](image/README/1703015625740.png)
+
+Screen after login
+![1703015644259](image/README/1703015644259.png)
+
+Using Context API, saving the access token. Also saving it in session storage
+```
+setAccessToken(data1.accessToken);
+sessionStorage.setItem("accessToken", data1.accessToken);
+```
+
+4. Payment
+![1703015850591](image/README/1703015850591.png)
+
+When Process payment is done, in the backend actually we are saving that particular session in database. No actual payment is being done, also there is a Fake payment page.
+
+We are saving the data in Enrollments MongoDB collection
+![1703015981845](image/README/1703015981845.png)
+
+We are storing email of the logged in user, slotID which is made up of Year+ Month + slot number and a fake paymentId which is randomly generated
+
+5. View sessions
+![1703016072674](image/README/1703016072674.png)
+The Instructor and location detail is right now static
+
+6. Logout
+```
+sessionStorage.removeItem("accessToken");
+setAccessToken(null);
+```
 
 
 ## Containerization and deploying in detail
+
+Although I have heard a lot about docker and containerisation, this was my first time using it in production. After dockerisation, I have took help of these two articles to deploy the image on cloud
+
+1. Uploading the image to Amazon ECR registry
+https://www.freecodecamp.org/news/build-and-push-docker-images-to-aws-ecr/
+
+2. Using Amazon App runner to deploy the containerized image
+https://nathanpeck.com/your-first-nodejs-container-on-aws/
