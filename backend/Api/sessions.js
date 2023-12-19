@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Enrollment = require('../DB/enrollments'); // Adjust the path
+const {validateToken}=require("../middlewares/AuthMiddleware")
 
 // Route to get enrollments by email
-router.get('/:email', async (req, res) => {
+router.get('/:email', validateToken ,async (req, res) => {
   const { email } = req.params;
 
   try {
