@@ -39,10 +39,15 @@ CREATE TABLE `USER_INFO` (
 ![1703009860061](image/README/1703009860061.png)
 
 
-### Actual tables
-These are the acutual tables on mongoDB which the service is using right now
+
 
 ### ER diagram
+#### Part 1
+![1703010563225](image/README/1703010563225.png)
+
+
+### Actual tables
+These are the acutual tables on mongoDB which the service is using right now
 
 #### User collection
 ![1703008560622](image/README/1703008560622.png)
@@ -68,7 +73,7 @@ These are the acutual tables on mongoDB which the service is using right now
 The slot indicator will be a made a react component, and to show some special things like slot filling fast, less slots we can use higher order components
 
 
-## Improvements
+## Improvements Possible
 ### Features
 
 1. Number of  Slots remaining on each unique slot (kind of like cowin ). At present I have infinite slots of each Yoga session
