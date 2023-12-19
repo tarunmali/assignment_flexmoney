@@ -42,9 +42,13 @@ CREATE TABLE `USER_INFO` (
 
 
 ### ER diagram
+Complete digital handrawn er diagram uploades as a pdf
+
 #### Part 1
 ![1703010563225](image/README/1703010563225.png)
 
+#### Part 2
+![1703011319895](image/README/1703011319895.png)
 
 ### Actual tables
 These are the acutual tables on mongoDB which the service is using right now
