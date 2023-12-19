@@ -26,7 +26,7 @@ const Sessions = () =>{
           const accessToken = sessionStorage.getItem("accessToken");
           const headers = { accessToken };
           const response = await axios.get(`${process.env.REACT_APP_BACKEND}/Api/sessions/${email}`, { headers });
-          console.log(response);
+          // console.log(response);
   
           if (response.status === 200) {
             setEnrollments(response.data);
@@ -42,6 +42,7 @@ const Sessions = () =>{
   
       fetchEnrollments();
     }, [email]);
+
 
 
     if(!sessionStorage.getItem('accessToken')) return <LoginToBook/>

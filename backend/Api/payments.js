@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Enrollments = require('../DB/enrollments');
+const {validateToken}=require("../middlewares/AuthMiddleware")
 
-router.post('/', async (req, res) => {
+router.post('/',validateToken ,async (req, res) => {
   const { selectedYear, selectedMonth, selectedSlot, email, amount } = req.body;
   const slotId = selectedYear + selectedMonth + selectedSlot;
   // generate random paymentID

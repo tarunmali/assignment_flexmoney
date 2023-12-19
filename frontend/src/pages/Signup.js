@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-// public\images\signuppic.svg
-//import signuppic frrom public folder at root level
 import signuppage from "../assets/images/signuppic.svg";
-
-
-
-// import signuppage from "./images/signuppic.svg";
 import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import confetti from "canvas-confetti";
