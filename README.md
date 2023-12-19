@@ -61,11 +61,11 @@ These are the acutual tables on mongoDB which the service is using right now
 
 
 
-## Code infrastructre and tools
-
-### Containerisation
-
-## Code logic and Algorithms 
+## Code infrastructre, Tech stack and tools
+1. Frontened is written in React with Parcel being the bundler. TailwindCSS is used to style the page.
+2. Backend is in Express(Node.JS).
+3. Frontend is deploed on Vercel.
+4. The Node.JS backend is containerized by Docker, app image is first uploaded on Amazon App ECR registry and then deployed on Amazone App runner 
 
 
 
@@ -111,3 +111,9 @@ The slot indicator will be a made a react component, and to show some special th
 1. Right now I am using docker to containerize my node.js backend, uploading it to Amazon ECR **registry** and running on Amazon App runner.  have to manually dockerize the node.js backend , manually upload it to Amazon ECR registry after every feature release. I plan to automate this stuff.
 2. Containerizing the react frontend, right now deployed on Vercel
 3. Using Kubernetes along with docker to fine tune the scaling of my node.js app according to traffic
+
+## Code logic and Algorithms  (along with step wise screenshots)
+1. 
+
+
+## Containerization and deploying in detail
