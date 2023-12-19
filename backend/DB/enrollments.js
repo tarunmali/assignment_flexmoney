@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Define the Enrollment schema
+
 const enrollmentSchema = new mongoose.Schema({
   email: {
     type: String,
