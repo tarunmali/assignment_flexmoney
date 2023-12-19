@@ -183,3 +183,16 @@ https://www.freecodecamp.org/news/build-and-push-docker-images-to-aws-ecr/
 
 2. Using Amazon App runner to deploy the containerized image
 https://nathanpeck.com/your-first-nodejs-container-on-aws/
+
+Here are the setps I have followed
+1. Docker image
+![1703018135809](image/README/1703018135809.png)
+
+2. Pushing to Amazon ECR registry
+![1703018311563](image/README/1703018311563.png)
+
+![1703018330065](image/README/1703018330065.png)
+
+3. Deploying on Amazon App runner
+![1703018427224](image/README/1703018427224.png)
+
