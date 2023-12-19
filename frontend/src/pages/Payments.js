@@ -4,13 +4,15 @@ import { useJwt } from "react-jwt";
 import Loading from "../components/Loading";
 import LoginToBook from "../components/LoginToBook";
 import axios from "axios";
+import { useAuth } from '../context/AuthContext';
+import FakePaymentForm from "../pages/FakePaymentForm";
 
 const Payments = () => {
+  const { accessToken, setAccessToken } = useAuth();
   const location = useLocation();
   const propsFromNavigate = location.state;
   const { selectedYear, selectedMonth, selectedSlot } = propsFromNavigate;
   const [paymentStatus, setPaymentStatus] = useState("");
-  const accessToken = sessionStorage.getItem("accessToken");
   const validToken = useJwt(accessToken, "maybegeneraterandomly");
   let email;
   if (validToken.decodedToken != null) {
@@ -34,7 +36,6 @@ const Payments = () => {
     try {
       setIsLoading(true);
 
-      const accessToken = sessionStorage.getItem("accessToken");
       const headers = { accessToken };
 
       const response = await axios.post(
@@ -66,9 +67,10 @@ const Payments = () => {
 
   if (isLoading) return <Loading />;
 
-  return !sessionStorage.getItem("accessToken") ? (
+  return !accessToken? (
     <LoginToBook />
   ) : (
+    <div class="flex">
     <div className="p-8">
       <h2 className="text-2xl font-semibold mb-4">
         💵Secure Payments: Powered by Flexmoney🥈
@@ -79,6 +81,9 @@ const Payments = () => {
       <p className="my-4">Email: {email}</p>
 
       <p className="mb-4">Price: 500 Rupees</p>
+
+
+
 
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
@@ -95,7 +100,13 @@ const Payments = () => {
         >
           {paymentStatus}
         </p>
+
+          
+
       )}
+
+    </div>
+    <FakePaymentForm/>
     </div>
   );
 };

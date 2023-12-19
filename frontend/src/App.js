@@ -10,14 +10,15 @@ import Login from './pages/Login';
 import 'dotenv/config';
 import Payments from "./pages/Payments";
 import Sessions from "./pages/Sessions";
+import { AuthProvider } from './context/AuthContext';
 
 const App=()=>{
     return (
-        <div >
+        <AuthProvider>
             <Header/>
             <Outlet/>
             <Footer/>
-        </div>
+        </AuthProvider>
     )
 }
 

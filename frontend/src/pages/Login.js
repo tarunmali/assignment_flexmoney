@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import signinpic from "../assets/images/signinpic.svg";
 import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from '../context/AuthContext';
 
 function Login(props) {
+  const { setAccessToken } = useAuth();
+
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -35,8 +38,8 @@ function Login(props) {
       const errata = data1.error;
 
       if (data2 === 200) {
-        // console.log(data1.accessToken);
         window.alert("Successfully login");
+        setAccessToken(data1.accessToken);
         sessionStorage.setItem("accessToken", data1.accessToken);
         navigate("/");
         window.location.reload();

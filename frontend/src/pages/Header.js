@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
 import { useJwt } from "react-jwt";
 import { Link, useNavigate, NavLink } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+  const { accessToken, setAccessToken } = useAuth();
   const navigate = useNavigate();
 
   const Logout = () => {
     navigate("/");
     sessionStorage.removeItem("accessToken");
+    setAccessToken(null);
     window.location.reload();
   };
 
-  const accessToken = sessionStorage.getItem("accessToken");
+
   const validToken = useJwt(accessToken, "maybegeneraterandomly");
   let frontendEmail;
   if (validToken.decodedToken != null) {
@@ -34,19 +37,19 @@ const Header = () => {
             <li className="px-2">About❓</li>
           </Link>
 
-          {!sessionStorage.getItem("accessToken") && (
+          {!accessToken && (
             <Link to="/login">
               <li className="px-2">Login 📥</li>
             </Link>
           )}
 
-          {!sessionStorage.getItem("accessToken") && (
+          {!accessToken && (
             <Link to="/signup">
               <li className="px-2">Signup 📮</li>
             </Link>
           )}
 
-          {sessionStorage.getItem("accessToken") && (
+          {accessToken && (
             <Link to="/sessions">
               <li className="px-2">My Sessions 📃</li>
             </Link>
@@ -54,7 +57,7 @@ const Header = () => {
         </ul>
       </div>
 
-      {sessionStorage.getItem("accessToken") && (
+      {accessToken && (
         <div className="nav-items">
           <ul className="flex py-3 "></ul>
 

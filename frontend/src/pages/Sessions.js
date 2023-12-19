@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import LoginToBook from "../components/LoginToBook";
 import axios from "axios";
+import { useAuth } from '../context/AuthContext';
 
 const Sessions = () => {
-  const accessToken = sessionStorage.getItem('accessToken');
+  const { accessToken} = useAuth();
   const validToken = useJwt(accessToken, "maybegeneraterandomly");
   const email = validToken.decodedToken?.email;
 
