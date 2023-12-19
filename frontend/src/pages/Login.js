@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import signinpic from './images/signinpic.svg';
-import { Routes, Route, Link, useNavigate, NavLink } from 'react-router-dom';
-// import zxcvbn from 'zxcvbn';
+import React, { useState } from "react";
+import signinpic from "../assets/images/signinpic.svg";
+import { useNavigate, NavLink } from "react-router-dom";
+import axios from "axios";
 
 function Login(props) {
   const navigate = useNavigate();
-  // const[isLoggedin,setIsLoggedin]=useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-
-  // let result=zxcvbn(user.password)
 
   let name, value;
   const handleInputs = (e) => {
@@ -22,30 +19,33 @@ function Login(props) {
 
   const PostData = async (e) => {
     e.preventDefault();
-    const { email,  password} = user;
+    const { email, password } = user;
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/Api/signin`,
+        {
+          email,
+          password,
+        }
+      );
 
-    const response = await fetch(`${process.env.REACT_APP_BACKEND}/Api/signin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+      const data1 = response.data;
+      const data2 = response.status;
 
-    //This is how the fetch api works
-    const data1 = await response.json();
-    const data2 = response.status;
+      const errata = data1.error;
 
-    const errata = data1.error;
-
-    if (data2 === 200) {
-    //   console.log(data1.accessToken);
-      window.alert('Successfully login');
-      sessionStorage.setItem("accessToken",data1.accessToken);
-      navigate('/');
-      window.location.reload();
-    } else {
-      window.alert(errata);
+      if (data2 === 200) {
+        // console.log(data1.accessToken);
+        window.alert("Successfully login");
+        sessionStorage.setItem("accessToken", data1.accessToken);
+        navigate("/");
+        window.location.reload();
+      } else {
+        window.alert(errata);
+      }
+    } catch (error) {
+      // Handle error
+      console.error("An error occurred:", error);
     }
   };
 
@@ -91,10 +91,7 @@ function Login(props) {
               >
                 Log In
               </button>
-              <NavLink
-                to="/Signup"
-                className="text-blue-500 hover:underline"
-              >
+              <NavLink to="/Signup" className="text-blue-500 hover:underline">
                 Register now
               </NavLink>
             </div>
