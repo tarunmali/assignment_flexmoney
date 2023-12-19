@@ -5,58 +5,51 @@ import Loading from "../components/Loading";
 import LoginToBook from "../components/LoginToBook";
 import axios from "axios";
 
+const Sessions = () => {
+  const accessToken = sessionStorage.getItem('accessToken');
+  const validToken = useJwt(accessToken, "maybegeneraterandomly");
+  const email = validToken.decodedToken?.email;
 
-const Sessions = () =>{
-    const accessToken=sessionStorage.getItem('accessToken');
-    const validToken = useJwt(accessToken, "maybegeneraterandomly");
-    let email;
-    if(validToken.decodedToken!=null){
-        email=validToken.decodedToken.email;
+  // In Enrollments table, find all rows where email=email
+  const [enrollments, setEnrollments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      try {
+        const headers = { accessToken };
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND}/Api/sessions/${email}`, { headers });
+
+        if (response.status === 200) {
+          setEnrollments(response.data);
+        } else {
+          console.error('Failed to fetch enrollments');
         }
-    
-    //In Enrolllments table, find all rows where email=email
-    const [enrollments, setEnrollments] = useState([]);
-    const [loading, setLoading] = useState(true);
+      } catch (error) {
+        console.error('Error during fetch:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-
-
-    useEffect(() => {
-      const fetchEnrollments = async () => {
-        try {
-          const accessToken = sessionStorage.getItem("accessToken");
-          const headers = { accessToken };
-          const response = await axios.get(`${process.env.REACT_APP_BACKEND}/Api/sessions/${email}`, { headers });
-          // console.log(response);
-  
-          if (response.status === 200) {
-            setEnrollments(response.data);
-          } else {
-            console.error('Failed to fetch enrollments');
-          }
-        } catch (error) {
-          console.error('Error during fetch:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
+    if (email) {
       fetchEnrollments();
-    }, [email]);
+    }
+  }, [accessToken, email]);
 
+  if (!accessToken) return <LoginToBook />;
 
-
-    if(!sessionStorage.getItem('accessToken')) return <LoginToBook/>
-    
-    return (
-    !email|| !enrollments || loading?<Loading />:(<div >
-                {enrollments.map((enrollment) => (
-                     <div key={enrollment._id} className="about">
-                    <SessionCard {...enrollment} />
-                    </div>
-                ))}
-             </div>)
-
+  return (
+    !email || !enrollments || loading ? <Loading /> : (
+      <div>
+        {enrollments.map((enrollment) => (
+          <div key={enrollment._id} className="about">
+            <SessionCard {...enrollment} />
+          </div>
+        ))}
+      </div>
     )
-}
+  );
+};
 
 export default Sessions;
